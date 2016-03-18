@@ -1,0 +1,19 @@
+{
+	"name": "include",
+	"version": "0.1.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "node ./test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/JCloudYu/include.git"
+	},
+	"author": "J.Cloud.Yu",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/JCloudYu/include/issues"
+	},
+	"homepage": "https://github.com/JCloudYu/include#readme"
+}
