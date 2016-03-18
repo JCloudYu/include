@@ -13,27 +13,28 @@
 
 		var
 		_include = function( modulePath ) {
-			return __mRequire( ( modulePath.substr( 0, 1 ) == "/" ) ? `${basePath}${modulePath}` : modulePath );
+			return __mRequire( ( modulePath.substr( 0, 1 ) == "/" ) ? basePath + modulePath: modulePath );
 		};
 		_include.all = function( packagePath ) {
 			var
 			modules = [],
-			basePkg = ( packagePath.substr( 0, 1 ) == "/" ) ? `${basePath}${packagePath}` : packagePath;
+			basePkg = ( packagePath.substr( 0, 1 ) == "/" ) ? basePath + packagePath : packagePath;
 
 
 			if ( !fs.statSync( basePkg ).isDirectory() )
 				return modules;
 
 			fs.readdirSync( basePkg ).forEach(function( name ){
-				if ( !fs.statSync( `${basePkg}/${name}` ).isFile() ) return;
+				var filePath = basePkg + "/" + name;
+				if ( !fs.statSync( filePath ).isFile() ) return;
 
-				modules.push( __mRequire( `${basePkg}/${name}` ) );
+				modules.push( __mRequire( filePath ) );
 			});
 
 			return modules;
 		};
 		_include.rebase = function( packagePath ) {
-			return ___GEN_SCOPED_INCLUDE( `${basePath}${packagePath}` );
+			return ___GEN_SCOPED_INCLUDE( basePath + packagePath );
 		};
 
 		return _include;
