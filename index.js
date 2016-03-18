@@ -4,26 +4,40 @@
 	fs	 = require( 'fs' ),
 
 	__mRequire = require,
-	__basePath = path.resolve( global.root_path || path.dirname(process.argv[1]) ),
+	__rootPath = path.resolve( global.root_path || path.dirname(process.argv[1]) );
 
-	__include  = module.exports = global.include = function( modulePath ){
-		return __mRequire( ( modulePath.substr( 0, 1 ) == "/" ) ? `${__basePath}${modulePath}` : modulePath );
-	};
-	__include.all = function( packagePath ){
+
+
+	module.exports = global.include = ___GEN_SCOPED_INCLUDE( __rootPath );
+
+
+	function ___GEN_SCOPED_INCLUDE( basePath ) {
+
 		var
-		modules = [],
-		basePkg = ( packagePath.substr( 0, 1 ) == "/" ) ? `${__basePath}${packagePath}` : packagePath;
+		_include = function( modulePath ) {
+			return __mRequire( ( modulePath.substr( 0, 1 ) == "/" ) ? `${basePath}${modulePath}` : modulePath );
+		};
+		_include.all = function( packagePath ) {
+			var
+			modules = [],
+			basePkg = ( packagePath.substr( 0, 1 ) == "/" ) ? `${basePath}${packagePath}` : packagePath;
 
 
-		if ( !fs.statSync( basePkg ).isDirectory() )
+			if ( !fs.statSync( basePkg ).isDirectory() )
+				return modules;
+
+			fs.readdirSync( basePkg ).forEach(function( name ){
+				if ( !fs.statSync( `${basePkg}/${name}` ).isFile() ) return;
+
+				modules.push( __mRequire( `${basePkg}/${name}` ) );
+			});
+
 			return modules;
+		};
+		_include.rebase = function( packagePath ) {
+			return ___GEN_SCOPED_INCLUDE( `${basePath}${packagePath}` );
+		};
 
-		fs.readdirSync( basePkg ).forEach(function( name ){
-			if ( !fs.statSync( `${basePkg}/${name}` ).isFile() ) return;
-
-			modules.push( __mRequire( `${basePkg}/${name}` ) );
-		});
-
-		return modules;
-	};
+		return _include;
+	}
 })();
