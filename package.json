@@ -1,5 +1,5 @@
 {
-	"name": "include",
+	"name": "root-include",
 	"version": "0.1.1",
 	"description": "Provide root-based module requiring path scheme",
 	"main": "index.js",
