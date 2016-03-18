@@ -6,8 +6,6 @@
 	__mRequire = require,
 	__rootPath = path.resolve( global.root_path || path.dirname(process.argv[1]) );
 
-
-
 	module.exports = global.include = ___GEN_SCOPED_INCLUDE( __rootPath );
 
 
