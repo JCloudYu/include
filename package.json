@@ -1,6 +1,6 @@
 {
 	"name": "include",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Provide root-based module requiring path scheme",
 	"main": "index.js",
 	"scripts": {
